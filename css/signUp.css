@@ -1,0 +1,33 @@
+.form-signin {
+				max-width: 330px;
+			}
+
+			.form-signin img {
+				max-width: 150px;
+			}
+			.form-signin img:first-child,
+			.preview {
+				border-radius: 50%;
+				width: 150px;
+				height: 150px;
+				object-fit: cover;
+			}
+			.avatar-container {
+				position: relative;
+			}
+			.camera-edit {
+				position: absolute;
+				z-index: 10;
+				background: #ffffff36;
+				left: 118px;
+				bottom: 11px;
+				cursor: pointer;
+				padding: 0 36px;
+				border-radius: 0 0 110px 110px;
+			}
+			.camera-edit:hover {
+				background: #ffffff93;
+			}
+			.modal {
+				color: #3a404b;
+			}
