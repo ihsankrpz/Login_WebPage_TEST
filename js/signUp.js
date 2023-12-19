@@ -91,43 +91,103 @@ cameraBtn.addEventListener("click", () => {
 })
 
 /* newUserForm  submit */
-newUserForm.addEventListener("submit", (e) => {
+newUserForm.addEventListener("submit", async (e) => {
+	/* loading modal ...  */
+	modalTitle.textContent = "loading ..."
+	modalBody.innerHTML = `
+			<div class="spinner-border m-auto d-block" role="status">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		`
+
 	e.preventDefault()
 	const formData = {
 		email: newUserForm.email.value,
 		userName: newUserForm.userName.value,
-		userPassword: newUserForm.floatingPassword.value,
+		password: newUserForm.floatingPassword.value,
 		confirmUserPassword: newUserForm.confirmFloatingPassword.value,
 		imageUrl: newUserForm.imageUrl.value,
 		birthDate: newUserForm.birthDate.value,
 	}
 	/* check passwords */
-	if (formData.confirmUserPassword != formData.userPassword) {
+	if (formData.confirmUserPassword != formData.password) {
 		document.querySelector(".invalid-feedback").style.display = "block"
 		document.querySelector(".invalid-feedback").textContent =
-			"Wrong passwords !!"
+			"Passwords do not match!!"
+		newUserForm.floatingPassword.focus()
+		newUserForm.floatingPassword.focus()
+		newUserForm.floatingPassword.classList.add("is-invalid")
+		newUserForm.confirmFloatingPassword.classList.add("is-invalid")
 		return
 	}
-	const myModalEl = document.querySelector("#formModal")
-	const modal = bootstrap.Modal.getInstance(myModalEl)
-	modal.show()
-	modalTitle.textContent = "Confirmation Message"
-	modalBody.innerHTML = "<h3>User created !</h3>"
-	modalFooter.innerHTML = `
-            <button
-                type="button"
-                class="btn btn-secondary finished-form"
-                data-bs-dismiss="modal"
-            >
-                Close
-            </button>
-            
-    `
-	/* all good and successful */
-	document.querySelector(".finished-form").addEventListener("click", () => {
-		window.location = "/"
-	})
-	document.querySelector(".modal").addEventListener("click", () => {
-		window.location = "/"
-	})
+	const postUrl = BASE_URI + "api/stuff"
+
+	try {
+		const res = await fetch(postUrl, {
+			method: "POST",
+			mode: "cors",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(formData),
+		})
+		// response error
+		if (res.status === 418 || res.status === 418) {
+			modalTitle.textContent = "Ooups ..."
+			modalBody.innerHTML =
+				"<h2 class='text-center text-danger'>This email is taken</h2>"
+			return
+		}
+		// no errors user successfully created
+		if (res.status === 201) {
+			const data = await res.json()
+			console.log(data)
+			modalTitle.textContent = "Success !"
+			modalBody.innerHTML =
+				"<h2 class='text-center text-success'>User created !</h2>"
+			setInterval(() => {
+				window.location = "./"
+			}, 1700)
+		} else {
+			throw new Error("Whoops!")
+		}
+	} catch (err) {
+		// connection error
+		modalTitle.textContent = "Ooups ..."
+		modalBody.innerHTML =
+			"<h2 class='text-center text-danger'>An error accurred ... </h2>"
+		modalBody.innerHTML += "<p>Please, try again later</p>"
+		return
+	} finally {
+		modalFooter.innerHTML = `
+				<button
+					type="button"
+					class="btn btn-secondary finished-form"
+					data-bs-dismiss="modal"
+				>
+					Close
+				</button>
+			`
+	}
+})
+
+/* checking pass fn */
+const passMatch = () => {
+	// console.log(passInput.value.length, confirmPassword.value.length)
+	if (passInput.value.length > 2 && passInput.value === confirmPassword.value) {
+		document.querySelector(".submit").setAttribute("data-bs-toggle", "modal")
+		document
+			.querySelector(".submit")
+			.setAttribute("data-bs-target", "#formModal")
+	}
+}
+
+/* check matching passwords on password input */
+const passInput = document.getElementById("floatingPassword")
+const confirmPassword = document.getElementById("confirmFloatingPassword")
+
+passInput.addEventListener("input", () => {
+	passMatch()
+})
+
+confirmPassword.addEventListener("input", () => {
+	passMatch()
 })

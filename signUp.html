@@ -36,10 +36,10 @@
 	<body>
 		<div class="container">
 			<header class="header text-center py-3">
-				<ul
-					class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 text-light"
-				>
-					<li><a href="./" class="nav-link px-2 link-light">Home</a></li>
+				<ul class="nav nav-pills justify-content-center">
+					<li class="nav-item">
+						<a href="./" class="nav-link active px-4">Home</a>
+					</li>
 				</ul>
 			</header>
 		</div>
@@ -121,7 +121,7 @@
 					<input type="text" class="d-none" id="imageUrl" />
 				</div>
 
-				<button class="w-100 btn btn-lg btn-primary" type="submit">
+				<button class="w-100 btn btn-lg btn-primary submit" type="submit">
 					Sign in
 				</button>
 				<p class="mt-5 mb-3 text-muted">© 2023</p>
@@ -147,7 +147,11 @@
 							aria-label="Close"
 						></button>
 					</div>
-					<div class="modal-body">...</div>
+					<div class="modal-body">
+						<div class="spinner-border m-auto d-block" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					</div>
 					<div class="modal-footer">...</div>
 				</div>
 			</div>
