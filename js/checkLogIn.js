@@ -26,7 +26,7 @@ const checkUser = async () => {
 
 				document.querySelector(".nav").innerHTML += `
 					<li>
-						<a href="../scores.html" class="nav-link px-2 link-light">Scores</a>
+						<a href="./scores.html" class="nav-link px-2 link-light">Scoress</a>
 					</li>
 				`
 				const data = await res.json()
