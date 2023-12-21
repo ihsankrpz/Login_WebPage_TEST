@@ -10,7 +10,8 @@ fetch(BASE_URI)
 		alert("you are offline !")
 		document.querySelector(".form-signin").innerHTML = `
         <h2 class='text-center'>Something went wrong connecting to the API ..</h2>
-        <p>try again later</p>           
+        <p>try again later</p>
+		<p>${err}</p>
         `
 	})
 

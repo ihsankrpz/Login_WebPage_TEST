@@ -40,7 +40,6 @@ logInForm.addEventListener("submit", async (e) => {
 		console.log(data)
 		/* store token */
 		localStorage.setItem("token", data.token)
-		localStorage.setItem("_id", data.userId)
 		window.location = "./"
 	} catch (err) {
 		console.log(err)
