@@ -1,5 +1,6 @@
 // base uri API
 const URI = "https://node-expess.martinpedraza.repl.co/api/secret"
+let userData = null
 
 const checkUser = async () => {
 	const token = localStorage.getItem("token")
@@ -14,10 +15,13 @@ const checkUser = async () => {
 				document.querySelector(".login-section").innerHTML = `
                     <div class="dropdown text-end">
                         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                            <img src="../img/user-default-avatar.png" alt="user avatar" width="32" height="32" class="rounded-circle user-avatar">
                         </a>
                         <ul class="dropdown-menu text-small">
-                            <li><button class="dropdown-item" href="#">Profile</button></li>
+                            <li><button class="dropdown-item"
+									data-bs-toggle="modal"
+									data-bs-target="#userModal"
+									>Profile</button></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><button class="dropdown-item signOut" href="#">Sign out</button></li>
                         </ul>
@@ -26,12 +30,33 @@ const checkUser = async () => {
 
 				document.querySelector(".nav").innerHTML += `
 					<li>
-						<a href="./scores.html" class="nav-link px-2 link-light">Scoress</a>
+						<a href="./scores.html" class="nav-link px-2 link-light">Scores</a>
 					</li>
 				`
 				const data = await res.json()
-				console.log(data.scores)
+				userData = data.user
+				console.log(userData)
 				localStorage.setItem("scores", JSON.stringify(data.scores))
+
+				/*   MODAL TREATMENT  */
+				document.getElementById("userModalLabel").textContent =
+					userData.userName
+				document.querySelector(".modal-body").innerHTML = `
+				<img src="../img/user-default-avatar.png" alt="user name" class="img-fluid rounded mx-auto d-block user-avatar" style="max-width: 180px;" >
+					<ul class="list-group">
+						<li class="list-group-item"><span class="fw-bold">UserName: ${userData.userName}</span></li>
+						<li class="list-group-item"><span class="fw-bold">Email: </span>${userData.email}</li>
+						<li class="list-group-item"><span class="fw-bold">Date of Birth: </span>${userData.birthDate}</li>
+					</ul>
+				
+				`
+
+				/*  check if user has personalized image */
+				if (userData.imageUrl != "") {
+					document
+						.querySelectorAll(".user-avatar")
+						.forEach((img) => (img.src = userData.imageUrl))
+				}
 
 				const signOutBtn = document.querySelector(".signOut")
 				signOutBtn.addEventListener("click", () => {
