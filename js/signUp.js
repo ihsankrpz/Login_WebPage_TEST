@@ -134,7 +134,7 @@ newUserForm.addEventListener("submit", async (e) => {
 		if (res.status === 418 || res.status === 418) {
 			modalTitle.textContent = "Ooups ..."
 			modalBody.innerHTML =
-				"<h2 class='text-center text-danger'>This email is taken by IHSAN'S API</h2>"
+				"<h2 class='text-center text-danger'>This email is taken</h2>"
 			return
 		}
 		// no errors user successfully created
@@ -143,7 +143,7 @@ newUserForm.addEventListener("submit", async (e) => {
 			console.log(data)
 			modalTitle.textContent = "Success !"
 			modalBody.innerHTML =
-				"<h2 class='text-center text-success'>User created by IHSAN'S API!</h2>"
+				"<h2 class='text-center text-success'>User created !</h2>"
 			setInterval(() => {
 				window.location = "./"
 			}, 1700)
