@@ -1,5 +1,5 @@
 // base uri API
-const URI = "https://node-expess.martinpedraza.repl.co/api/secret"
+const URI = "https://node-expess.ihsankrpz.repl.co/api/secret"
 let userData = null
 
 const checkUser = async () => {
