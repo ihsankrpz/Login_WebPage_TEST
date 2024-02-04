@@ -1,5 +1,5 @@
 // base uri API
-const BASE_URI = "https://replit.com/@ihsankrpz/node-expess#index.js"
+const BASE_URI = "https://replit.com/@ihsankrpz/node-expess"
 fetch(BASE_URI)
 	.then((res) => {
 		res.json().then((data) => {
